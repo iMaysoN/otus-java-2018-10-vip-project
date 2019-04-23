@@ -19,18 +19,18 @@ public class CommandServiceImpl implements CommandService {
     @Override
     public ToTelegram handleCommand(Update update) {
         String command = update.getMessage().getText();
+        String chatId = update.getMessage().getChat().getId().toString();
+        String response = "";
         if (command.startsWith("/now")) {
-            String eventsAsString = now().stream().map(Event::getTitle).collect(Collectors.joining(" - "));
-            return new ToTelegram(
-                    update.getMessage().getChat().getId().toString(),
-                    String.format("Events list: %s", eventsAsString));
+            response = now();
         }
-        return null;
+        return new ToTelegram(chatId, response);
     }
 
-    private Set<Event> now() {
+    private String now() {
         Set<Event> currentEvents = eventsRepository.getCurrentEvents(240L);
-        return currentEvents;
+        String eventsAsString = currentEvents.stream().map(Event::getTitle).collect(Collectors.joining(" - "));
+        return String.format("Events list: %s", eventsAsString);
     }
 
     private void timetable() {
