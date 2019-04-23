@@ -3,18 +3,20 @@ package ru.otus.telegram;
 import org.springframework.stereotype.Service;
 import ru.otus.events.Event;
 import ru.otus.events.EventsRepository;
+import ru.otus.services.CommandService;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service("commandHandler")
-public class CommandHandler {
+@Service
+public class CommandServiceImpl implements CommandService {
     private final EventsRepository eventsRepository;
 
-    public CommandHandler(EventsRepository eventsRepository) {
+    public CommandServiceImpl(EventsRepository eventsRepository) {
         this.eventsRepository = eventsRepository;
     }
 
+    @Override
     public ToTelegram handleCommand(Update update) {
         String command = update.getMessage().getText();
         if (command.startsWith("/now")) {
