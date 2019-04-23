@@ -1,0 +1,14 @@
+out/
+build/
+target/
+
+/.gradle
+/.idea
+.DS_Store
+*.iml
+*.ipr
+*.iws
+
+*.log
+
+local*.properties
