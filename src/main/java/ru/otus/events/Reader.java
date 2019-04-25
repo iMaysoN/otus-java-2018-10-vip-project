@@ -26,4 +26,13 @@ public class Reader {
     public String getRegalia() {
         return regalia;
     }
+
+    @Override
+    public String toString() {
+        return "Reader{" +
+                "firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", regalia='" + regalia + '\'' +
+                '}';
+    }
 }

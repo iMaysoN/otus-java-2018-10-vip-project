@@ -1,4 +1,4 @@
-package ru.otus.telegram;
+package ru.otus.telegram.models.input;
 
 public class Chat {
     private String last_name;

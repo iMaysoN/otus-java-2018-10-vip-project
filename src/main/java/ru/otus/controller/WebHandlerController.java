@@ -1,21 +1,17 @@
 package ru.otus.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.otus.frontend.ToTelegram;
 import ru.otus.services.CommandService;
-import ru.otus.services.FrontendService;
-import ru.otus.telegram.ToTelegram;
-import ru.otus.telegram.Update;
+import ru.otus.telegram.models.input.Update;
 
 @RestController
 public class WebHandlerController {
 
     private final CommandService commandService;
-    private final FrontendService frontendService;
 
-    public WebHandlerController(CommandService commandService,
-                                FrontendService frontendService) {
+    public WebHandlerController(CommandService commandService) {
         this.commandService = commandService;
-        this.frontendService = frontendService;
     }
 
     @PostMapping("/hook-input")
@@ -24,16 +20,17 @@ public class WebHandlerController {
         System.out.println("hook-input post");
         System.out.println(update);
         if (update.getMessage().getText().startsWith("/")) {
-            final ToTelegram toTelegram = commandService.handleCommand(update);
-            frontendService.sendResponse(toTelegram);
+            commandService.handleCommand(update);
         }
-        return "test";
+        return "OK";
     }
 
-    @GetMapping("/sendMessage")
+    @PostMapping("/sendMessage")
     public void sendMessageTest(@RequestParam("token") String token,
-                                @RequestParam("chat_id") String chat_id,
-                                @RequestParam("text") String text) {
-        System.out.println(String.format("sendMessage recieved: %s - %s - %s", token, chat_id, text));
+                                @RequestBody ToTelegram body) {
+        System.out.println(String.format("sendMessage recieved: %s - %s - %s", token, body.getChat_id(), body.getText()));
+        if (body.getReply_markup() != null) {
+            System.out.println("Buttons: " + body.getReply_markup());
+        }
     }
 }

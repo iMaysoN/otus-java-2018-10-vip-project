@@ -18,4 +18,12 @@ public class Room {
         room.description = description;
         return room;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

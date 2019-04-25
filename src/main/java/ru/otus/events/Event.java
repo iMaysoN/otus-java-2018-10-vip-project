@@ -34,6 +34,10 @@ public class Event {
         return description;
     }
 
+    public String getEventPresentation() {
+        return String.format("Event `%s`. Reader - %s. Place - %s.", title, reader, room);
+    }
+
     public Room getRoom() {
         return room;
     }
