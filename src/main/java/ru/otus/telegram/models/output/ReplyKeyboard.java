@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReplyKeyboard implements KeyboardMarkup<ReplyButton> {
-    private List<ReplyButton> keyboard;
+    //Array of Array of KeyboardButton
+    private List<List<ReplyButton>> keyboard;
 
     public ReplyKeyboard() {
         this.keyboard = new ArrayList<>();
@@ -12,24 +13,29 @@ public class ReplyKeyboard implements KeyboardMarkup<ReplyButton> {
 
     @Override
     public void addButton(ReplyButton button) {
-        this.keyboard.add(button);
+        this.keyboard.get(0).add(button);
     }
+
     private boolean resize_keyboard = true;
 
     public ReplyKeyboard(List<ReplyButton> buttons) {
-        this.keyboard = buttons;
+        this.keyboard = new ArrayList<>() {{
+            add(buttons);
+        }};
     }
 
-    public List<ReplyButton> getButtons() {
+    public List<List<ReplyButton>> getButtons() {
         return keyboard;
     }
 
     public void addButtons(List<ReplyButton> buttons) {
-        this.keyboard.addAll(buttons);
+        this.keyboard.get(0).addAll(buttons);
     }
 
     public void setButtons(List<ReplyButton> buttons) {
-        this.keyboard = buttons;
+        this.keyboard = new ArrayList<>() {{
+            add(buttons);
+        }};
     }
 
     public boolean isResize_keyboard() {

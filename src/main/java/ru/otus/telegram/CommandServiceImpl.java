@@ -2,12 +2,12 @@ package ru.otus.telegram;
 
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
-import ru.otus.events.Event;
-import ru.otus.events.EventsRepository;
-import ru.otus.events.Reader;
-import ru.otus.events.Room;
 import ru.otus.services.CommandService;
 import ru.otus.services.FrontendService;
+import ru.otus.storage.DbServiceImpl;
+import ru.otus.storage.entities.Event;
+import ru.otus.storage.entities.Reader;
+import ru.otus.storage.entities.Room;
 import ru.otus.telegram.models.input.Update;
 import ru.otus.telegram.models.output.InlineButton;
 import ru.otus.telegram.models.output.InlineKeyboard;
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class CommandServiceImpl implements CommandService {
-    private final EventsRepository eventsRepository;
+    private final DbServiceImpl dbServiceImpl;
     private final FrontendService frontendService;
     private static Gson gson = new Gson();
 
-    public CommandServiceImpl(EventsRepository eventsRepository,
+    public CommandServiceImpl(DbServiceImpl dbServiceImpl,
                               FrontendService frontendService) {
-        this.eventsRepository = eventsRepository;
+        this.dbServiceImpl = dbServiceImpl;
         this.frontendService = frontendService;
     }
 
@@ -55,6 +55,7 @@ public class CommandServiceImpl implements CommandService {
     }
 
     //Стартовая команда
+    //Должна выводить список всех доступных команд (нужно потестить - вдруг удобней одноразово ее выводить)
     private void getAllCommand(String chatId) {
 //    Здесь будет добавление пользователя в базу для различных вещей
         ReplyKeyboard replyKeyboard = new ReplyKeyboard();
@@ -69,9 +70,10 @@ public class CommandServiceImpl implements CommandService {
     }
 
     //Список событий, которые уже начались, но еще не закончились
+    //Нужно для того, чтобы узнать, что идет сейчас, если человек хочет поменять что-то или проголосовать за текущее
     private void findEventAtNow(String chatId) {
         long currentTime = getCurrentTime();
-        Set<Event> currentEvents = eventsRepository.getEventsInTime(currentTime);
+        Set<Event> currentEvents = dbServiceImpl.getEventsInTime(currentTime);
         List<String> eventsList = currentEvents.stream()
                 .map(Event::getEventPresentation)
                 .collect(Collectors.toList());
@@ -85,11 +87,18 @@ public class CommandServiceImpl implements CommandService {
         frontendService.sendResponse(chatId, responseText);
     }
 
+    //Добавить команду "Следующее"
+    //Выводит только список следующих эвентов, т.е. тех, которые минимально стартуют от текущего времени
+    //Каждый эвент как inline_button, чтобы можно было добавить в schedule
+    private void whatNext(String chatId) {
+
+    }
+
     //Список событий, которые еще не начинались, с сортировкой по комнатам
     private void getEventsTimetable(String chatId) {
-        Set<Event> notStarted = eventsRepository.getNotStartedEvents(getCurrentTime());
+        Set<Event> notStarted = dbServiceImpl.getNotStartedEvents(getCurrentTime());
         Map<Room, Set<Event>> eventsByRoom = new HashMap<>();
-        eventsRepository.getRooms().forEach(room -> {
+        dbServiceImpl.getRooms().forEach(room -> {
                     Set<Event> eventsInRoom = notStarted.stream()
                             .filter(event -> event.getRoom().equals(room))
                             .collect(Collectors.toSet());
@@ -110,8 +119,11 @@ public class CommandServiceImpl implements CommandService {
     }
 
     //Список спикеров
+    //Нажатие на спикера вывоводит полную информацию по нему, а также список лекций
+    //При нажатии на конкретную лекцию - выводится информация по ней и если она уже стартовала, то
+    //возможно проголосовать.
     private void getReaders(String chatId) {
-        Set<Reader> readers = eventsRepository.getReaders();
+        List<Reader> readers = dbServiceImpl.getReaders();
         if (readers.size() > 0) {
             InlineKeyboard inlineKeyboard = new InlineKeyboard();
             readers.stream().map(reader -> reader.getFirstName() + " " + reader.getSecondName())
@@ -132,5 +144,13 @@ public class CommandServiceImpl implements CommandService {
     //Найти по имени/описанию - спикера, событие, стенд
     private void find(String chatId) {
         frontendService.sendResponse(chatId, "Not implemented");
+    }
+
+    //Голосовалка
+    //Каждый пользователь может поставить лекции от 1 до 10 звезд
+    //Оценку можно менять в течении получаса после окончания
+    //Голосовать можно не раньше, чем лекция стартует
+    private void vote(String chatId) {
+
     }
 }
