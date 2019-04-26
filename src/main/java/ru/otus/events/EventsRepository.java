@@ -33,7 +33,7 @@ public class EventsRepository {
         return readers;
     }
 
-    public Set<Event> getCurrentEvents(Long currentTime) {
+    public Set<Event> getEventsInTime(Long currentTime) {
         Set<Event> currentEvents = events.stream()
                 .filter(event -> event.getTimeStart() <= currentTime && event.getTimeEnd() > currentTime)
                 .collect(Collectors.toSet());
