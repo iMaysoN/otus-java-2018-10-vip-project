@@ -2,11 +2,13 @@ package ru.otus.storage.entities;
 
 import com.google.common.base.Objects;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.StringJoiner;
 
+@Entity
 @Table(name = "rooms")
 public class Room {
 

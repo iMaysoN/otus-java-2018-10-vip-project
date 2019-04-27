@@ -2,6 +2,7 @@ package ru.otus.storage.entities;
 
 import javax.persistence.*;
 
+@Entity
 @Table(name = "events")
 public class Event {
     @Id
@@ -20,6 +21,15 @@ public class Event {
     private Room room;
 
     public Event() {
+    }
+
+    public Event(Long timeStart, Long timeEnd, String title, String description, Reader reader, Room room) {
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.title = title;
+        this.description = description;
+        this.reader = reader;
+        this.room = room;
     }
 
     public String getEventPresentation() {

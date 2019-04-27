@@ -1,6 +1,7 @@
 package ru.otus.storage;
 
 import org.springframework.stereotype.Service;
+import ru.otus.services.DbService;
 import ru.otus.storage.entities.*;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class DbServiceImpl {
+public class DbServiceImpl implements DbService {
     private final EventsRepository eventsRepository;
     private final RoomRepository roomRepository;
     private final ReaderRepository readerRepository;
@@ -23,36 +24,44 @@ public class DbServiceImpl {
         initMockEvents();
     }
 
+    @Override
     public void addEvent(Event event) {
         this.eventsRepository.save(event);
     }
 
+    @Override
     public void addReader(Reader reader) {
         this.readerRepository.save(reader);
     }
 
+    @Override
     public void addRoom(Room room) {
         this.roomRepository.save(room);
     }
 
+    @Override
     public List<Event> getEvents() {
         return eventsRepository.findAll();
     }
 
+    @Override
     public List<Room> getRooms() {
         return roomRepository.findAll();
     }
 
+    @Override
     public List<Reader> getReaders() {
         return readerRepository.findAll();
     }
 
+    @Override
     public Set<Event> getEventsInTime(Long currentTime) {
         return getEvents().stream()
                 .filter(event -> event.isInProgress(currentTime))
                 .collect(Collectors.toSet());
     }
 
+    @Override
     public Set<Event> getNotStartedEvents(Long fromTime) {
         return getEvents().stream()
                 .filter(event -> event.isNotStarted(fromTime))

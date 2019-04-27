@@ -3,8 +3,8 @@ package ru.otus.telegram;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Service;
 import ru.otus.services.CommandService;
+import ru.otus.services.DbService;
 import ru.otus.services.FrontendService;
-import ru.otus.storage.DbServiceImpl;
 import ru.otus.storage.entities.Event;
 import ru.otus.storage.entities.Reader;
 import ru.otus.storage.entities.Room;
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class CommandServiceImpl implements CommandService {
-    private final DbServiceImpl dbServiceImpl;
+    private final DbService dbService;
     private final FrontendService frontendService;
     private static Gson gson = new Gson();
 
-    public CommandServiceImpl(DbServiceImpl dbServiceImpl,
+    public CommandServiceImpl(DbService dbService,
                               FrontendService frontendService) {
-        this.dbServiceImpl = dbServiceImpl;
+        this.dbService = dbService;
         this.frontendService = frontendService;
     }
 
@@ -73,7 +73,7 @@ public class CommandServiceImpl implements CommandService {
     //Нужно для того, чтобы узнать, что идет сейчас, если человек хочет поменять что-то или проголосовать за текущее
     private void findEventAtNow(String chatId) {
         long currentTime = getCurrentTime();
-        Set<Event> currentEvents = dbServiceImpl.getEventsInTime(currentTime);
+        Set<Event> currentEvents = dbService.getEventsInTime(currentTime);
         List<String> eventsList = currentEvents.stream()
                 .map(Event::getEventPresentation)
                 .collect(Collectors.toList());
@@ -96,9 +96,9 @@ public class CommandServiceImpl implements CommandService {
 
     //Список событий, которые еще не начинались, с сортировкой по комнатам
     private void getEventsTimetable(String chatId) {
-        Set<Event> notStarted = dbServiceImpl.getNotStartedEvents(getCurrentTime());
+        Set<Event> notStarted = dbService.getNotStartedEvents(getCurrentTime());
         Map<Room, Set<Event>> eventsByRoom = new HashMap<>();
-        dbServiceImpl.getRooms().forEach(room -> {
+        dbService.getRooms().forEach(room -> {
                     Set<Event> eventsInRoom = notStarted.stream()
                             .filter(event -> event.getRoom().equals(room))
                             .collect(Collectors.toSet());
@@ -123,7 +123,7 @@ public class CommandServiceImpl implements CommandService {
     //При нажатии на конкретную лекцию - выводится информация по ней и если она уже стартовала, то
     //возможно проголосовать.
     private void getReaders(String chatId) {
-        List<Reader> readers = dbServiceImpl.getReaders();
+        List<Reader> readers = dbService.getReaders();
         if (readers.size() > 0) {
             InlineKeyboard inlineKeyboard = new InlineKeyboard();
             readers.stream().map(reader -> reader.getFirstName() + " " + reader.getSecondName())
