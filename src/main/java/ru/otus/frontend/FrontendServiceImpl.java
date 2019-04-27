@@ -12,12 +12,12 @@ public class FrontendServiceImpl implements FrontendService {
     //    private static String url = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
     //    private static String url = "https://localhost:8080/sendMessage?token=%s&chat_id=%s&text=%s";
     //me: chat_id=274155259
-    private static String url = "http://localhost:8080/sendMessage";
-    private static String token = "Abcd12E";
-    private static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private static Gson gson = new Gson();
+    private static final String url = "http://localhost:8080/sendMessage";
+    private static final String token = "Abcd12E";
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final Gson gson = new Gson();
 
-    private static OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient();
 
     @Override
     public void sendResponse(String chatId, String text) {

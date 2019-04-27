@@ -5,8 +5,8 @@ public class ToTelegram {
     private String text;
     private String reply_markup;
 
-    public ToTelegram() {
-    }
+//    public ToTelegram() {
+//    }
 
     public ToTelegram(String chat_id, String text) {
         this.chat_id = chat_id;
