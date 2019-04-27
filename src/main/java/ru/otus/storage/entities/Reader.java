@@ -2,10 +2,7 @@ package ru.otus.storage.entities;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.StringJoiner;
 
 @Entity
@@ -14,8 +11,11 @@ public class Reader {
     @Id
     @GeneratedValue
     private Long id;
+    @Column
     private String firstName;
+    @Column
     private String secondName;
+    @Column
     private String regalia;
 
     public Reader() {

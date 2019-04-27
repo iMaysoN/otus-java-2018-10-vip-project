@@ -8,9 +8,13 @@ public class Event {
     @Id
     @GeneratedValue
     private Long id;
+    @Column
     private Long timeStart;
+    @Column
     private Long timeEnd;
+    @Column
     private String title;
+    @Column
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

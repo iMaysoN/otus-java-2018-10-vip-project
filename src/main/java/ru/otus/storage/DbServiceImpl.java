@@ -83,45 +83,40 @@ public class DbServiceImpl implements DbService {
         addReader(petrPetrov);
         addReader(babaKlava);
 
-        Event event1 = new Event() {{
-            setTime(110L, 200L);
-            setRoom(blueRoom);
-            setReader(ivanIvanov);
-            setTitle("Джава эвент");
-            setDescription("Обычный джава эвент");
-        }};
+        Event event1 = new Event();
+        event1.setTime(110L, 200L);
+        event1.setRoom(blueRoom);
+        event1.setReader(ivanIvanov);
+        event1.setTitle("Джава эвент");
+        event1.setDescription("Обычный джава эвент");
 
-        Event event2 = new Event() {{
-            setTime(210L, 300L);
-            setRoom(blueRoom);
-            setReader(ivanIvanov);
-            setTitle("Второй Джава эвент");
-            setDescription("Второй джава эвент");
-        }};
+        Event event2 = new Event();
+        event2.setTime(210L, 300L);
+        event2.setRoom(blueRoom);
+        event2.setReader(ivanIvanov);
+        event2.setTitle("Второй Джава эвент");
+        event2.setDescription("Второй джава эвент");
 
-        Event event3 = new Event() {{
-            setTime(110L, 200L);
-            setRoom(redRoom);
-            setReader(petrPetrov);
-            setTitle("Фронтендовый эвент");
-            setDescription("Страшный фронтендовый эвент");
-        }};
+        Event event3 = new Event();
+        event3.setTime(110L, 200L);
+        event3.setRoom(redRoom);
+        event3.setReader(petrPetrov);
+        event3.setTitle("Фронтендовый эвент");
+        event3.setDescription("Страшный фронтендовый эвент");
 
-        Event event4 = new Event() {{
-            setTime(100L, 300L);
-            setRoom(yellowRoom);
-            setReader(babaKlava);
-            setTitle("Как уронить сервер если нет высшего образования");
-            setDescription("Исповедь самого опасного человека на свете");
-        }};
+        Event event4 = new Event();
+        event4.setTime(100L, 300L);
+        event4.setRoom(yellowRoom);
+        event4.setReader(babaKlava);
+        event4.setTitle("Как уронить сервер если нет высшего образования");
+        event4.setDescription("Исповедь самого опасного человека на свете");
 
-        Event event5 = new Event() {{
-            setTime(310L, 400L);
-            setRoom(redRoom);
-            setReader(babaKlava);
-            setTitle("Клава наносит ответный удар");
-            setDescription("Рассвет Сергеевны");
-        }};
+        Event event5 = new Event();
+        event5.setTime(310L, 400L);
+        event5.setRoom(redRoom);
+        event5.setReader(babaKlava);
+        event5.setTitle("Клава наносит ответный удар");
+        event5.setDescription("Рассвет Сергеевны");
 
         addEvent(event1);
         addEvent(event2);
