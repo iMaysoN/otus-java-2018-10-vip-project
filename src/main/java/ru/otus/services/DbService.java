@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Set;
 
 public interface DbService {
-    void addEvent(Event event);
+    void saveEvent(Event event);
 
-    void addReader(Reader reader);
+    void saveReader(Reader reader);
 
-    void addRoom(Room room);
+    void saveRoom(Room room);
 
     List<Event> getEvents();
 

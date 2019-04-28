@@ -11,12 +11,14 @@ public class Reader {
     @Id
     @GeneratedValue
     private Long id;
-    @Column
+    @Column(name = "first_name")
     private String firstName;
-    @Column
+    @Column(name = "second_name")
     private String secondName;
     @Column
     private String regalia;
+//    @OneToMany(mappedBy = "reader", fetch = FetchType.EAGER)
+//    private Set<Event> events;
 
     public Reader() {
     }
@@ -25,7 +27,15 @@ public class Reader {
         this.firstName = firstName;
         this.secondName = secondName;
         this.regalia = regalia;
+//        this.events = new HashSet<>();
     }
+
+//    public Reader(String firstName, String secondName, String regalia, Set<Event> events) {
+//        this.firstName = firstName;
+//        this.secondName = secondName;
+//        this.regalia = regalia;
+//        this.events = events;
+//    }
 
     public Long getId() {
         return id;
@@ -58,6 +68,18 @@ public class Reader {
     public void setRegalia(String regalia) {
         this.regalia = regalia;
     }
+
+//    public Collection<Event> getEvents() {
+//        return events;
+//    }
+
+//    public void setEvents(Set<Event> events) {
+//        this.events = events;
+//    }
+
+//    public void addEvent(Event event) {
+//        this.events.add(event);
+//    }
 
     @Override
     public String toString() {

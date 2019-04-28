@@ -2,6 +2,8 @@ package ru.otus.frontend;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.otus.services.FrontendService;
 
@@ -9,6 +11,7 @@ import java.io.IOException;
 
 @Service
 public class FrontendServiceImpl implements FrontendService {
+    private static final Logger logger = LoggerFactory.getLogger(FrontendService.class);
     //    private static String url = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
     //    private static String url = "https://localhost:8080/sendMessage?token=%s&chat_id=%s&text=%s";
     //me: chat_id=274155259
@@ -30,9 +33,9 @@ public class FrontendServiceImpl implements FrontendService {
                 .addEncodedQueryParameter("token", token);
         String bodyString = gson.toJson(new ToTelegram(chatId, text, keyboard.isBlank() ? null : keyboard));
 
-        System.out.println("Body: " + bodyString);
+        logger.info("Send body: " + bodyString);
         String urlToRequest = urlBuilder.build().toString();
-        System.out.println(urlToRequest);
+        logger.info("To url: " + urlToRequest);
         RequestBody requestBody = RequestBody.create(JSON, bodyString);
         Request httpRequest = new Request.Builder()
                 .post(requestBody)
@@ -40,7 +43,7 @@ public class FrontendServiceImpl implements FrontendService {
                 .build();
         try {
             Response response = client.newCall(httpRequest).execute();
-            System.out.println(response.body().string());
+            logger.info("Response: " + response.body().string());
         } catch (IOException e) {
             e.printStackTrace();
         }

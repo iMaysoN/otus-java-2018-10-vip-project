@@ -25,17 +25,17 @@ public class DbServiceImpl implements DbService {
     }
 
     @Override
-    public void addEvent(Event event) {
+    public void saveEvent(Event event) {
         this.eventsRepository.save(event);
     }
 
     @Override
-    public void addReader(Reader reader) {
+    public void saveReader(Reader reader) {
         this.readerRepository.save(reader);
     }
 
     @Override
-    public void addRoom(Room room) {
+    public void saveRoom(Room room) {
         this.roomRepository.save(room);
     }
 
@@ -72,16 +72,16 @@ public class DbServiceImpl implements DbService {
         Room blueRoom = new Room("Blue room", "Синий зал, 2-ой этаж");
         Room redRoom = new Room("Red room", "Красный зал, 1-ый этаж");
         Room yellowRoom = new Room("Yellow room", "Желтый зал, фойе");
-        addRoom(blueRoom);
-        addRoom(redRoom);
-        addRoom(yellowRoom);
+        saveRoom(blueRoom);
+        saveRoom(redRoom);
+        saveRoom(yellowRoom);
 
         Reader ivanIvanov = new Reader("Иван", "Иванов", "Супер-пупер джавист");
         Reader petrPetrov = new Reader("Петр", "Петров", "Злобный фронтендер");
         Reader babaKlava = new Reader("Клава", "Сергеевна", "Уборщица");
-        addReader(ivanIvanov);
-        addReader(petrPetrov);
-        addReader(babaKlava);
+        saveReader(ivanIvanov);
+        saveReader(petrPetrov);
+        saveReader(babaKlava);
 
         Event event1 = new Event();
         event1.setTime(110L, 200L);
@@ -118,10 +118,10 @@ public class DbServiceImpl implements DbService {
         event5.setTitle("Клава наносит ответный удар");
         event5.setDescription("Рассвет Сергеевны");
 
-        addEvent(event1);
-        addEvent(event2);
-        addEvent(event3);
-        addEvent(event4);
-        addEvent(event5);
+        saveEvent(event1);
+        saveEvent(event2);
+        saveEvent(event3);
+        saveEvent(event4);
+        saveEvent(event5);
     }
 }

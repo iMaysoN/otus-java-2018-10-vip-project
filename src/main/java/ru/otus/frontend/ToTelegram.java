@@ -5,8 +5,9 @@ public class ToTelegram {
     private String text;
     private String reply_markup;
 
-//    public ToTelegram() {
-//    }
+    //empty constructor needed for test for sendMessage input
+    public ToTelegram() {
+    }
 
     public ToTelegram(String chat_id, String text) {
         this.chat_id = chat_id;

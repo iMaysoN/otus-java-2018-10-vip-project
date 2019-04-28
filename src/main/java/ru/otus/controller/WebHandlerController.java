@@ -1,5 +1,7 @@
 package ru.otus.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.frontend.ToTelegram;
 import ru.otus.services.CommandService;
@@ -7,6 +9,7 @@ import ru.otus.telegram.models.input.Update;
 
 @RestController
 public class WebHandlerController {
+    private final static Logger logger = LoggerFactory.getLogger(WebHandlerController.class);
 
     private final CommandService commandService;
 
@@ -17,8 +20,8 @@ public class WebHandlerController {
     @PostMapping("/hook-input")
     @ResponseBody
     public String hookInput(@RequestBody Update update) {
-        System.out.println("hook-input post");
-        System.out.println(update);
+        logger.info("Receive /hook-input");
+        logger.info(update.toString());
         if (update.getMessage().getText().startsWith("/")) {
             commandService.handleCommand(update);
         }
@@ -28,9 +31,9 @@ public class WebHandlerController {
     @PostMapping("/sendMessage")
     public void sendMessageTest(@RequestParam("token") String token,
                                 @RequestBody ToTelegram body) {
-        System.out.println(String.format("sendMessage recieved: %s - %s - %s", token, body.getChat_id(), body.getText()));
+        logger.info(String.format("sendMessage recieved: %s - %s - %s", token, body.getChat_id(), body.getText()));
         if (body.getReply_markup() != null) {
-            System.out.println("Buttons: " + body.getReply_markup());
+            logger.info("Buttons: " + body.getReply_markup());
         }
     }
 }

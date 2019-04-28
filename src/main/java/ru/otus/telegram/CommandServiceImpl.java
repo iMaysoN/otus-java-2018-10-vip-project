@@ -100,7 +100,7 @@ public class CommandServiceImpl implements CommandService {
         Map<Room, Set<Event>> eventsByRoom = new HashMap<>();
         dbService.getRooms().forEach(room -> {
                     Set<Event> eventsInRoom = notStarted.stream()
-                            .filter(event -> event.getRoom().equals(room))
+                            .filter(event -> event.isEventInThisRoom(room))
                             .collect(Collectors.toSet());
                     if (eventsInRoom.size() > 0) {
                         eventsByRoom.put(room, eventsInRoom);

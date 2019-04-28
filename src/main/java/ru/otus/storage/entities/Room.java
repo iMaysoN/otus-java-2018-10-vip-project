@@ -16,6 +16,8 @@ public class Room {
     private String title;
     @Column
     private String description;
+//    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+//    private Set<Event> events;
 
     public Room() {
     }
@@ -23,7 +25,14 @@ public class Room {
     public Room(String title, String description) {
         this.title = title;
         this.description = description;
+//        this.events = new HashSet<>();
     }
+
+//    public Room(String title, String description, Set<Event> events) {
+//        this.title = title;
+//        this.description = description;
+//        this.events = events;
+//    }
 
     public Long getId() {
         return id;
@@ -48,6 +57,18 @@ public class Room {
     public void setDescription(String description) {
         this.description = description;
     }
+
+//    public Collection<Event> getEvents() {
+//        return events;
+//    }
+
+//    public void setEvents(Set<Event> events) {
+//        this.events = events;
+//    }
+
+//    public void addEvent(Event event) {
+//        this.events.add(event);
+//    }
 
     @Override
     public String toString() {
