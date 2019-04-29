@@ -69,10 +69,10 @@ public class DbServiceImpl implements DbService {
     }
 
     private void initMockEvents() {
-        Room blueRoom = new Room("Blue room", "Синий зал, 2-ой этаж");
+        Room greenRoom = new Room("Blue room", "Синий зал, 2-ой этаж");
         Room redRoom = new Room("Red room", "Красный зал, 1-ый этаж");
         Room yellowRoom = new Room("Yellow room", "Желтый зал, фойе");
-        saveRoom(blueRoom);
+        saveRoom(greenRoom);
         saveRoom(redRoom);
         saveRoom(yellowRoom);
 
@@ -85,14 +85,14 @@ public class DbServiceImpl implements DbService {
 
         Event event1 = new Event();
         event1.setTime(110L, 200L);
-        event1.setRoom(blueRoom);
+        event1.setRoom(greenRoom);
         event1.setReader(ivanIvanov);
         event1.setTitle("Джава эвент");
         event1.setDescription("Обычный джава эвент");
 
         Event event2 = new Event();
         event2.setTime(210L, 300L);
-        event2.setRoom(blueRoom);
+        event2.setRoom(greenRoom);
         event2.setReader(ivanIvanov);
         event2.setTitle("Второй Джава эвент");
         event2.setDescription("Второй джава эвент");
