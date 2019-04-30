@@ -1,7 +1,7 @@
 package ru.otus.services;
 
-import ru.otus.telegram.ToTelegram;
-
 public interface FrontendService {
-    void sendResponse(ToTelegram toTelegram);
+    void sendResponse(String chatId, String text);
+
+    void sendResponse(String chatId, String text, String keyboard);
 }

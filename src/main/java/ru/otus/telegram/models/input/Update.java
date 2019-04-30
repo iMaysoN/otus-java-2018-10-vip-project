@@ -1,4 +1,4 @@
-package ru.otus.telegram;
+package ru.otus.telegram.models.input;
 
 public class Update {
     private Integer update_id;

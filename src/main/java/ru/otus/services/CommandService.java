@@ -1,8 +1,7 @@
 package ru.otus.services;
 
-import ru.otus.telegram.ToTelegram;
-import ru.otus.telegram.Update;
+import ru.otus.telegram.models.input.Update;
 
 public interface CommandService {
-    ToTelegram handleCommand(Update update);
+    void handleCommand(Update update);
 }
