@@ -20,7 +20,7 @@ public class WebHandlerController {
     @PostMapping("/hook-input")
     @ResponseBody
     public String hookInput(@RequestBody Update update) {
-        logger.info("Receive /hook-input");
+        logger.info("DEMO: Receive /hook-input");
         logger.info(update.toString());
         if (update.getMessage().getText().startsWith("/")) {
             commandService.handleCommand(update);
@@ -31,9 +31,9 @@ public class WebHandlerController {
     @PostMapping("/sendMessage")
     public void sendMessageTest(@RequestParam("token") String token,
                                 @RequestBody ToTelegram body) {
-        logger.info(String.format("sendMessage recieved: %s - %s - %s", token, body.getChat_id(), body.getText()));
+        logger.info(String.format("DEMO: Receive /sendMessage: %s - %s - %s", token, body.getChat_id(), body.getText()));
         if (body.getReply_markup() != null) {
-            logger.info("Buttons: " + body.getReply_markup());
+            logger.info("DEMO: With buttons: " + body.getReply_markup());
         }
     }
 }
